@@ -16,8 +16,8 @@ public class TimeRecorder {
 		
 		myTimeRecoder.getData();
 		
-		myTimeRecoder.computeTotalPerWeekDay();
-		myTimeRecoder.computeTotalPerEmployee();
+		myTimeRecoder.computeTotals();
+		// myTimeRecoder.computeTotalPerEmployee();
 		
 		myTimeRecoder.printResults();
 
@@ -28,7 +28,7 @@ public class TimeRecorder {
 		Scanner myScanner = new Scanner(System.in);
 		
 		System.out.print("How many employees do you want" +
-								"to process for their work time? ");
+								" to process for their work time? ");
 		
 		int numOfEmployees = myScanner.nextInt();
 		
@@ -40,8 +40,7 @@ public class TimeRecorder {
 			
 			for(WeekDays currentDay:WeekDays.values()) {
 				
-				System.out.print("  Input work time for Employee " + (employeeCount+1) 
-									+ " on " + currentDay + ": ");
+				System.out.print("  Input work time for Employee " + (employeeCount+1) + " on " + currentDay + ": ");
 				hours[employeeCount][currentDay.ordinal()] = myScanner.nextInt();
 			}
 		}
@@ -49,34 +48,22 @@ public class TimeRecorder {
 		myScanner.close();	
 	}
 	
-	public void computeTotalPerWeekDay() {
+	public void computeTotals() {
 			
 		for(WeekDays currentDay:WeekDays.values()) {
 			
 			dayHours[currentDay.ordinal()] = 0;
+			weekHours = new int[hours.length];
 			
 			for(int employeeCount=0; employeeCount < hours.length; employeeCount++) {	
-				dayHours[currentDay.ordinal()] = dayHours[currentDay.ordinal()] 
-															+ hours[employeeCount][currentDay.ordinal()];
+				dayHours[currentDay.ordinal()] = dayHours[currentDay.ordinal()] + hours[employeeCount][currentDay.ordinal()];
+				
+				weekHours[employeeCount] = 0;
+				weekHours[employeeCount] = weekHours[employeeCount] + hours[employeeCount][currentDay.ordinal()];
 			}
 		}
 	}
 	
-	public void computeTotalPerEmployee() {
-		
-		weekHours = new int[hours.length];
-		
-		for(int employeeCount=0; employeeCount < hours.length; employeeCount++) {
-			
-			weekHours[employeeCount] = 0;
-		
-			for(WeekDays currentDay:WeekDays.values()) {
-				weekHours[employeeCount] = weekHours[employeeCount] 
-															+ hours[employeeCount][currentDay.ordinal()];
-			}
-		}
-		
-	}
 	
 	public void printResults() {
 		
